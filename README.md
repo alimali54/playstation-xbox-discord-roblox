@@ -1,4 +1,5 @@
 Bu araç, bilgisayarınızı akıllı bir ağ geçidine (Gateway) dönüştürerek; **PlayStation, Xbox ve Nintendo Switch** gibi konsollardan Discord (Sesli Sohbet) ve Roblox'a sorunsuz bir şekilde bağlanmanızı sağlar.
+<img width="502" height="527" alt="Ekran Alıntısı" src="https://github.com/user-attachments/assets/58027d21-c7b2-4138-8dbf-cd6a79489e5e" />
 
 ## ✨ Öne Çıkan Özellikler
 
