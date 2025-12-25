@@ -1,7 +1,10 @@
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
+#include <EditConstants.au3> ; Edit kontrolleri için gerekli
+#include <GuiEdit.au3>       ; Otomatik kaydırma fonksiyonu için gerekli
 #include <Inet.au3>
-
+#include <File.au3>          ; Dosya okuma işlemleri için gerekli
+#include <Array.au3>         ; Dizi işlemleri için gerekli
 #RequireAdmin
 
 ; --- Degiskenler ---
@@ -12,15 +15,38 @@ Local $testUrl = "https://www.roblox.com"
 Local $params[] = ["-5 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "-6 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "-7 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "-8 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "-9 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "-5 --set-ttl 5 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53", "--set-ttl 3 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53 --dnsv6-addr 2606:4700:4700::1111 --dnsv6-port 53"]
 Local $statusText = ""
 
-; GUI
-Local $hGUI = GUICreate("PlayStation Discord & Roblox Erişimi", 500, 500)
-Local $iLabel = GUICtrlCreateLabel("Sistem kontrol ediliyor...", 20, 20, 460, 460)
-GUICtrlSetFont(-1, 10, 400, 0, "Consolas")
+; --- STRATEJİLERİ DOSYADAN OKU ---
+Local $strategyFile = $gdpiDir & "\strategies.txt"
+Local $params
+If FileExists($strategyFile) Then
+    _FileReadToArray($strategyFile, $params)
+    _ArrayDelete($params, 0) ; Satır sayısını tutan ilk elemanı sil
+Else
+    ; Dosya yoksa yedek olarak tek bir strateji tanımla
+    Local $params[1] = ["-5 --blacklist hosts.txt --dns-addr 1.1.1.1 --dns-port 53"]
+EndIf
+
+; GUI OLUŞTURMA
+Local $hGUI = GUICreate("PlayStation Discord & Roblox Erişimi", 550, 500) ; Genişliği biraz artırdık
+GUISetBkColor(0x000000) ; Pencerenin ana arka planını SİYAH yapıyoruz
+
+; Label yerine READONLY (Sadece okunabilir) EDIT kontrolü
+; $ES_MULTILINE: Çok satırlı, $ES_AUTOVSCROLL: Otomatik kaydırma, $WS_VSCROLL: Kaydırma çubuğu
+Local $iLabel = GUICtrlCreateEdit("", 10, 10, 530, 480, BitOR($ES_MULTILINE, $ES_AUTOVSCROLL, $ES_READONLY), 0)
+
+GUICtrlSetFont(-1, 10, 400, 0, "Consolas") ; Terminal havası için Consolas
+GUICtrlSetBkColor(-1, 0x000000) ; Siyah arka plan
+GUICtrlSetColor(-1, 0x00FF00)   ; Yeşil yazı (Matrix stili)
+
 GUISetState(@SW_SHOW)
 
+; LOG FONKSİYONU (YENİLENMİŞ)
 Func LogMsg($msg)
     $statusText &= "> " & $msg & @CRLF
     GUICtrlSetData($iLabel, $statusText)
+
+    ; Yeni mesaj gelince en aşağıya otomatik kaydır
+    _GUICtrlEdit_LineScroll($iLabel, 0, _GUICtrlEdit_GetLineCount($iLabel))
 EndFunc
 
 ; Güvenlik Duvari Sorgu Fonksiyonu
