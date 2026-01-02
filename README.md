@@ -26,8 +26,6 @@ Bu araç seti, bilgisayarınızı bir ağ geçidine dönüştürür. Süreç şu
 
 1. **GoodbyeDPI:** Yerel ağ trafiğindeki DPI (Derin Paket İnceleme) engellerini aşarak yasaklı veya sorunlu domainlere (Roblox, Discord vb.) erişim sağlar.
 2. **Go-Pcap2Socks:** Bilgisayarınızda sanal bir ağ katmanı oluşturur. Konsolunuza (PS5/Xbox) programın belirttiği **172.24.x.x** bloğundaki IP adreslerini girdiğinizde, konsolunuz internete çıkmak için PC'nizi bir router olarak kullanmaya başlar.
-3. **DNSCrypt-Proxy:** Bilgisayarınızı yerel bir DNS sunucusuna dönüştürür. DPI bypass işleminin başarılı olması için sitelerin **gerçek IP adreslerine** ulaşılması şarttır. ISS DNS'leri engelli siteler için yanlış/sahte IP döndürdüğünden, Playstation'ın DNS ayarlarına bilgisayarınızın IP adresini girerek PC'de çalışan DNSCrypt-Proxy servisine bağlanmış oluruz.
-
 
 ## Gereksinimler
 1.  **PC:** 64 Bit Windows işletim sistemi.
@@ -60,7 +58,6 @@ Kaynak kodundan derlemek isterseniz:
 Bu proje, aşağıdaki harika açık kaynaklı araçları bir araya getirerek çalışmaktadır:
 
 * **[GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI)** - ValdikSS tarafından geliştirilen pasif DPI engelleyici.
-* **[dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy)** - DNS trafiğini şifrelemek ve güvenli DNS kullanmak için.
 * **[go-pcap2socks](https://github.com/DaniilSokolyuk/go-pcap2socks)** - Pcap trafiğini SOCKS vekillere yönlendiren ağ köprüsü.
 * **[Npcap](https://npcap.com/)** - Windows için paket yakalama kütüphanesi.
 * **Google Gemini:** Ben söyledim, gemini kodları yazdı :)
